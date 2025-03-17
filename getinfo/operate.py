@@ -1,3 +1,4 @@
+"""这是一个临时使用的operate工作脚本，主要作用是定义操作，精确的工作脚本在main文件里"""
 import asyncio
 import random as rnd
 
