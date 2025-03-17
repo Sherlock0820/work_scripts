@@ -1,0 +1,43 @@
+2025-03-13 14:44:53,230 - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-2' coro=<Connection.run() done, defined at E:\python_codes_learning\ngwork\venv\Lib\site-packages\playwright\_impl\_connection.py:272> exception=NotImplementedError()>
+Traceback (most recent call last):
+  File "E:\python_codes_learning\ngwork\venv\Lib\site-packages\playwright\_impl\_connection.py", line 279, in run
+    await self._transport.connect()
+  File "E:\python_codes_learning\ngwork\venv\Lib\site-packages\playwright\_impl\_transport.py", line 133, in connect
+    raise exc
+  File "E:\python_codes_learning\ngwork\venv\Lib\site-packages\playwright\_impl\_transport.py", line 120, in connect
+    self._proc = await asyncio.create_subprocess_exec(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda3\Lib\asyncio\subprocess.py", line 223, in create_subprocess_exec
+    transport, protocol = await loop.subprocess_exec(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda3\Lib\asyncio\base_events.py", line 1694, in subprocess_exec
+    transport = await self._make_subprocess_transport(
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda3\Lib\asyncio\base_events.py", line 502, in _make_subprocess_transport
+    raise NotImplementedError
+NotImplementedError
+2025-03-13 14:44:53,248 - CRITICAL - ¡·¡·¡·¡·¡·¡·¡·¡·main error: cannot unpack non-iterable NoneType object
+2025-03-13 14:49:02,586 - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-2' coro=<Connection.run() done, defined at E:\python_codes_learning\ngwork\venv\Lib\site-packages\playwright\_impl\_connection.py:272> exception=NotImplementedError()>
+Traceback (most recent call last):
+  File "E:\python_codes_learning\ngwork\venv\Lib\site-packages\playwright\_impl\_connection.py", line 279, in run
+    await self._transport.connect()
+  File "E:\python_codes_learning\ngwork\venv\Lib\site-packages\playwright\_impl\_transport.py", line 133, in connect
+    raise exc
+  File "E:\python_codes_learning\ngwork\venv\Lib\site-packages\playwright\_impl\_transport.py", line 120, in connect
+    self._proc = await asyncio.create_subprocess_exec(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda3\Lib\asyncio\subprocess.py", line 223, in create_subprocess_exec
+    transport, protocol = await loop.subprocess_exec(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda3\Lib\asyncio\base_events.py", line 1694, in subprocess_exec
+    transport = await self._make_subprocess_transport(
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda3\Lib\asyncio\base_events.py", line 502, in _make_subprocess_transport
+    raise NotImplementedError
+NotImplementedError
+2025-03-13 14:49:02,588 - CRITICAL - ¡·¡·¡·¡·¡·¡·¡·¡·main error: cannot unpack non-iterable NoneType object
+2025-03-13 14:59:14,351 - CRITICAL - ¡·¡·¡·¡·¡·¡·¡·¡·main error: csv_convert() got an unexpected keyword argument 'sheet_name'
+2025-03-13 15:04:45,573 - CRITICAL - ¡·¡·¡·¡·¡·¡·¡·¡·main error: csv_convert() got an unexpected keyword argument 'sheet_name'
+2025-03-13 15:07:45,526 - CRITICAL - ¡·¡·¡·¡·¡·¡·¡·¡·main error: csv_convert() got an unexpected keyword argument 'sheet_name'
