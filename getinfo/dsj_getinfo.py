@@ -37,7 +37,7 @@ async def dsj_login(wqx_page, login: dict = None, taskname: str = None):
             'body > app-root > div > div > div > app-customer-task-list > div:nth-child(2) > app-ng-table > nz-table > nz-spin > div > div > nz-table-inner-default > div > table > tbody > tr:nth-child(15) > td:nth-child(7) > span')
         await wqx_page.locator('#f_status > nz-select-top-control').click()
         await wqx_page.locator('#f_status > nz-select-top-control').type('未清洗\n')
-        await wqx_page.wait_for_timeout(timeout=6000)
+        await wqx_page.wait_for_timeout(timeout=8000)
         if taskname is not None:
             await wqx_page.locator('#f_taskName > nz-select-top-control > nz-select-search > input').click()
             await wqx_page.locator('#f_taskName > nz-select-top-control > nz-select-search > input').type(
