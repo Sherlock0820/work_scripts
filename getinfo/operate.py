@@ -154,6 +154,6 @@ async def test():
 
 
 if __name__ == '__main__':
-    for i in range(6):
+    for i in range(60):
         asyncio.run(test())
         print(i)
