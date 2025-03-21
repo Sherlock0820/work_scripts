@@ -28,14 +28,14 @@ async def page_fill(new_page: playwright.async_api._generated.Page, company_type
                 amount_in_wan = f"{amount_value} 万元"
             else:
                 amount_in_wan = f"{amount_value / 10000} 万元"
-            await new_page.locator("#nf_registerCapital").click()
+            await new_page.locator("#nf_registerCapital").click(timeout=3000)
             await new_page.locator("#nf_registerCapital").fill(" ")
             await new_page.locator("#nf_registerCapital").type(amount_in_wan)
         '''转化注册资本单位为万元'''
         xz_flag = new_page.locator('#nf_markEnpNatureNew > nz-select-top-control')
         xz_tag = await xz_flag.locator('nz-select-item[title]').count() <= 0
         if xz_tag:
-            await new_page.locator('#nf_markEnpNatureNew').click()
+            await new_page.locator('#nf_markEnpNatureNew').click(timeout=3000)
             await new_page.locator('#nf_markEnpNatureNew').type(company_type + '\n')
             await new_page.wait_for_timeout(timeout=1000)
         '''上面输入企业性质'''
@@ -43,32 +43,32 @@ async def page_fill(new_page: playwright.async_api._generated.Page, company_type
         yw_flag = new_page.locator('#nf_serviceType > div')
         yw_tag = await yw_flag.locator('nz-select-item[title]').count() <= 0
         if yw_tag:
-            await new_page.locator('#nf_serviceType').click()
+            await new_page.locator('#nf_serviceType').click(timeout=3000)
             await new_page.wait_for_timeout(timeout=1000)
             yw_xpath = f"//nz-tree-node-title[@title='{yw_type}']"
             yw_select = new_page.locator(yw_xpath)
             yw_node = yw_select.locator("xpath=ancestor::nz-tree-node")
-            await yw_node.locator("nz-tree-node-checkbox").click()
+            await yw_node.locator("nz-tree-node-checkbox").click(timeout=3000)
             await new_page.wait_for_timeout(timeout=1000)
         '''上面选择业务类型选项卡'''
         hy_flag = new_page.locator('#nf_industryCategory')
         hy_tag = await hy_flag.locator("nz-select-item[title]").count() <= 0
         if hy_tag:
-            await new_page.locator('#nf_industryCategory > div > nz-select-search > input').click()
+            await new_page.locator('#nf_industryCategory > div > nz-select-search > input').click(timeout=3000)
             await new_page.wait_for_timeout(timeout=1000)
             await new_page.locator('#nf_industryCategory > div > nz-select-search > input').type(hy_type + '\n')
             await new_page.wait_for_timeout(timeout=1000)
             hy_xpath = f"//nz-tree-node-title[@title='{hy_type}']"
             hy_select = new_page.locator(hy_xpath)
             hy_node = hy_select.locator("xpath=ancestor::nz-tree-node")
-            await hy_node.locator("nz-tree-node-checkbox").click()
+            await hy_node.locator("nz-tree-node-checkbox").click(timeout=3000)
             await new_page.wait_for_timeout(timeout=1000)
         '''上面选择新中大行业类别选项卡'''
         zcb, zycb = certifications_get(certifications_info)
         zcb_flag = new_page.locator('#nf_generalContractingQualification > nz-select-top-control')
         zcb_tag = await zcb_flag.locator('nz-select-item[title]').count() <= 0
         if zcb_tag:
-            await new_page.locator("#nf_generalContractingQualification > nz-select-top-control").click()
+            await new_page.locator("#nf_generalContractingQualification > nz-select-top-control").click(timeout=3000)
             await new_page.locator("#nf_generalContractingQualification > nz-select-top-control").type(zcb + '\n')
             await new_page.wait_for_timeout(timeout=1000)
         '''上面输入总承包资质'''
@@ -76,7 +76,7 @@ async def page_fill(new_page: playwright.async_api._generated.Page, company_type
         zycb_tag = await zycb_flag.locator('nz-select-item[title]').count() <= 0
         if zycb_tag:
             await new_page.locator(
-                "#nf_professionalContractingQualification > nz-select-top-control > nz-select-search > input").click()
+                "#nf_professionalContractingQualification > nz-select-top-control > nz-select-search > input").click(timeout=3000)
             await new_page.locator(
                 "#nf_professionalContractingQualification > nz-select-top-control > nz-select-search > input").type(
                 zycb + '\n')
@@ -89,7 +89,7 @@ async def page_fill(new_page: playwright.async_api._generated.Page, company_type
         await new_page.wait_for_selector(
             'body > app-root > div > div > div > app-customer-task-detail > div > app-pick-pool > div:nth-child(3) > button',
             timeout=3000)
-        await confirm_button.click()
+        await confirm_button.click(timeout=3000)
         await new_page.wait_for_selector("button:has-text('确定')", timeout=2000)
         await new_page.locator("button:has-text('确定')").click(timeout=10000)
         await new_page.wait_for_timeout(timeout=2000)

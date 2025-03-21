@@ -15,13 +15,13 @@ async def qxb_getinfo(page, company_name):
     '''
     try:
         await page.locator(
-            '#universal-head > div.w-100.p-relative > div > div.d-inline-flex.align-items-center.m-l-30.line-height-1 > div').click()  # 登录
+            '#universal-head > div.w-100.p-relative > div > div.d-inline-flex.align-items-center.m-l-30.line-height-1 > div').click(timeout=3000)  # 登录
         login = {
             'user': '18470754656',
             'password': '20040820Hw'
         }
         await page.locator(
-            'body > div.z-modal.fade-in > div.slide-down-in > div > div > div.p-h-50 > div.d-flex.justify-content-around.f-16.m-t-70 > div:nth-child(2)').click()
+            'body > div.z-modal.fade-in > div.slide-down-in > div > div > div.p-h-50 > div.d-flex.justify-content-around.f-16.m-t-70 > div:nth-child(2)').click(timeout=3000)
         await page.locator(
             'body > div.z-modal.fade-in > div.slide-down-in > div > div > div.p-h-50 > div.b-radius-4.m-t-30.b-gray-4 > div > div > div.ant-input-number > div.ant-input-number-input-wrap > input').fill(
             login['user'])
@@ -29,10 +29,10 @@ async def qxb_getinfo(page, company_name):
             'body > div.z-modal.fade-in > div.slide-down-in > div > div > div.p-h-50 > div.d-block.p-12.m-t-20.b-radius-4.p-relative.b-gray-4 > input').fill(
             login['password'])
         await page.locator(
-            'body > div.z-modal.fade-in > div.slide-down-in > div > div > div.p-h-50 > label > span.ant-checkbox > input').click()
+            'body > div.z-modal.fade-in > div.slide-down-in > div > div > div.p-h-50 > label > span.ant-checkbox > input').click(timeout=3000)
         await page.wait_for_timeout(timeout=5000)
         await page.locator(
-            'body > div.z-modal.fade-in > div.slide-down-in > div > div > div.p-h-50 > div.button.middle.main.m-t-32.w-100.h-48').click()
+            'body > div.z-modal.fade-in > div.slide-down-in > div > div > div.p-h-50 > div.button.middle.main.m-t-32.w-100.h-48').click(timeout=3000)
         print('Complete the verification code to log in->')
         await page.locator(
             '#__nuxt > div > div.z-fixed.p-fixed.left-0.right-0.top-0.bottom-0.d-flex.flex-center > div.p-relative > img.d-block.m-h-auto.cursor-pointer').click(

@@ -16,7 +16,7 @@ async def dsj_login(wqx_page, login: dict = None, taskname: str = None):
     '''
     try:
         await wqx_page.locator(
-            '#cdk-overlay-1 > nz-modal-confirm-container > div > div > div > div > div.ant-modal-confirm-btns.ng-tns-c32-2 > button > span').click()
+            '#cdk-overlay-1 > nz-modal-confirm-container > div > div > div > div > div.ant-modal-confirm-btns.ng-tns-c32-2 > button > span').click(timeout=3000)
         if login == None:
             login = {
                 'username': '250065',
@@ -29,20 +29,20 @@ async def dsj_login(wqx_page, login: dict = None, taskname: str = None):
             'body > app-root > div > div > div > app-login > div > div.container > div.rightPanel > div > form > nz-form-item:nth-child(2) > nz-form-control > div > div > nz-input-group > input').fill(
             login['password'])
         await wqx_page.locator(
-            'body > app-root > div > div > div > app-login > div > div.container > div.rightPanel > div > form > button > span').click()  # 实现登录,点击确定
+            'body > app-root > div > div > div > app-login > div > div.container > div.rightPanel > div > form > button > span').click(timeout=3000)  # 实现登录,点击确定
         await wqx_page.wait_for_timeout(timeout=1000)
         await wqx_page.locator(
-            'body > app-root > div > app-header > div.fixed-head.ng-star-inserted > div > ul > li:nth-child(3) > a').click()  # 跳转到客户清洗列表
+            'body > app-root > div > app-header > div.fixed-head.ng-star-inserted > div > ul > li:nth-child(3) > a').click(timeout=3000)  # 跳转到客户清洗列表
         await wqx_page.wait_for_selector(
             'body > app-root > div > div > div > app-customer-task-list > div:nth-child(2) > app-ng-table > nz-table > nz-spin > div > div > nz-table-inner-default > div > table > tbody > tr:nth-child(15) > td:nth-child(7) > span')
-        await wqx_page.locator('#f_status > nz-select-top-control').click()
+        await wqx_page.locator('#f_status > nz-select-top-control').click(timeout=3000)
         await wqx_page.locator('#f_status > nz-select-top-control').type('未清洗\n')
-        await wqx_page.wait_for_timeout(timeout=16000)
+        await wqx_page.wait_for_timeout(timeout=10000)
         if taskname is not None:
-            await wqx_page.locator('#f_taskName > nz-select-top-control > nz-select-search > input').click()
+            await wqx_page.locator('#f_taskName > nz-select-top-control > nz-select-search > input').click(timeout=3000)
             await wqx_page.locator('#f_taskName > nz-select-top-control > nz-select-search > input').type(
                 taskname + '\n')
-        await wqx_page.wait_for_timeout(timeout=5000)
+        await wqx_page.wait_for_timeout(timeout=2000)
         return wqx_page
     except Exception as e:
         print(f'dsj_login error: {e}')
@@ -68,7 +68,7 @@ async def dsj_getinfo(wqx_page, count=1):
             choice = choices[-1]
             entrance = choice.locator('div>a', has_text='办理')
             async with wqx_page.context.expect_page() as new_page_info:
-                await entrance.click()
+                await entrance.click(timeout=3000)
             new_page = await new_page_info.value
             await new_page.wait_for_load_state('domcontentloaded')
             '''获取单个企业的需操作页面'''
