@@ -23,14 +23,16 @@ async def page_fill(new_page: playwright.async_api._generated.Page, company_type
     try:
         amount = await new_page.eval_on_selector("#nf_registerCapital", "el => el.value")
         if amount.strip() != "":
-            amount_value = float(re.sub(r'[^\d.]', '', amount))
-            if amount_value < 10000:
-                amount_in_wan = f"{amount_value} 万元"
-            else:
-                amount_in_wan = f"{amount_value / 10000} 万元"
-            await new_page.locator("#nf_registerCapital").click(timeout=3000)
-            await new_page.locator("#nf_registerCapital").fill(" ")
-            await new_page.locator("#nf_registerCapital").type(amount_in_wan)
+            amount_value_str=re.sub(r'[^\d.]', '', amount)
+            if amount_value_str:
+                amount_value = float(amount_value_str)
+                if amount_value < 10000:
+                    amount_in_wan = f"{amount_value} 万元"
+                else:
+                    amount_in_wan = f"{amount_value / 10000} 万元"
+                await new_page.locator("#nf_registerCapital").click(timeout=3000)
+                await new_page.locator("#nf_registerCapital").fill(" ")
+                await new_page.locator("#nf_registerCapital").type(amount_in_wan)
         '''转化注册资本单位为万元'''
         xz_flag = new_page.locator('#nf_markEnpNatureNew > nz-select-top-control')
         xz_tag = await xz_flag.locator('nz-select-item[title]').count() <= 0
@@ -142,7 +144,7 @@ async def test():
     '''测试函数'''
     try:
         p, pages, browser = await open_sites()
-        wqx_page = await dsj_login(pages[0], taskname='湖南省客户清洗3月19日')  # 改成了无头模式，记得改回来
+        wqx_page = await dsj_login(pages[0], taskname='湖南省客户清洗3月21日')  # 改成了无头模式，记得改回来
         new_page, name = await dsj_getinfo(wqx_page)
         await page_fill(new_page)
         await pages[0].wait_for_timeout(timeout=1000)
@@ -154,6 +156,6 @@ async def test():
 
 
 if __name__ == '__main__':
-    for i in range(60):
+    for i in range(30):
         asyncio.run(test())
         print(i)
