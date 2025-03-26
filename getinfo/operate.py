@@ -7,6 +7,7 @@ import playwright.async_api
 
 from dsj_getinfo import dsj_getinfo, dsj_login
 from general_open import open_sites
+from general_close import close_sites
 
 
 async def page_fill(new_page: playwright.async_api._generated.Page, company_type: str = '民企',
@@ -41,7 +42,7 @@ async def page_fill(new_page: playwright.async_api._generated.Page, company_type
             await new_page.locator('#nf_markEnpNatureNew').type(company_type + '\n')
             await new_page.wait_for_timeout(timeout=1000)
         '''上面输入企业性质'''
-        hy_type, yw_type = industry_get(industry_info)
+        hy_types, yw_type = industry_get(industry_info)
         yw_flag = new_page.locator('#nf_serviceType > div')
         yw_tag = await yw_flag.locator('nz-select-item[title]').count() <= 0
         if yw_tag:
@@ -56,16 +57,24 @@ async def page_fill(new_page: playwright.async_api._generated.Page, company_type
         hy_flag = new_page.locator('#nf_industryCategory')
         hy_tag = await hy_flag.locator("nz-select-item[title]").count() <= 0
         if hy_tag:
-            await new_page.locator('#nf_industryCategory > div > nz-select-search > input').click(timeout=3000)
-            await new_page.wait_for_timeout(timeout=1000)
-            await new_page.locator('#nf_industryCategory > div > nz-select-search > input').type(hy_type + '\n')
-            await new_page.wait_for_timeout(timeout=1000)
-            hy_xpath = f"//nz-tree-node-title[@title='{hy_type}']"
-            hy_select = new_page.locator(hy_xpath)
-            hy_node = hy_select.locator("xpath=ancestor::nz-tree-node")
-            await hy_node.locator("nz-tree-node-checkbox").click(timeout=3000)
-            await new_page.wait_for_timeout(timeout=1000)
+            for hy_type in hy_types:
+                await new_page.locator('#nf_industryCategory > div > nz-select-search > input').click(timeout=3000)
+                await new_page.wait_for_timeout(timeout=1000)
+                await new_page.locator('#nf_industryCategory > div > nz-select-search > input').type(hy_type + '\n')
+                await new_page.wait_for_timeout(timeout=1000)
+                hy_xpath = f"//nz-tree-node-title[@title='{hy_type}']"
+                hy_select = new_page.locator(hy_xpath)
+                hy_node = hy_select.locator("xpath=ancestor::nz-tree-node")
+                await hy_node.locator("nz-tree-node-checkbox").click(timeout=3000)
+                await new_page.wait_for_timeout(timeout=1000)
         '''上面选择新中大行业类别选项卡'''
+        await new_page.locator("#nf_customerListing").click(timeout=3000)
+        clear_button=new_page.locator('#nf_serviceType > div > nz-select-item > span')
+        if clear_button:
+            await clear_button.click(timeout=3000)
+            await new_page.wait_for_timeout(timeout=1000)
+        await new_page.locator("#nf_customerListing > nz-select-top-control > nz-select-search > input").type('i8'+'\n')
+        '''仅针对i8任务，把列名改成i8来源，根据任务名称修改'''
         zcb, zycb = certifications_get(certifications_info)
         zcb_flag = new_page.locator('#nf_generalContractingQualification > nz-select-top-control')
         zcb_tag = await zcb_flag.locator('nz-select-item[title]').count() <= 0
@@ -104,11 +113,14 @@ async def page_fill(new_page: playwright.async_api._generated.Page, company_type
 def industry_get(info_dict: dict = None):
     '''获取业务类型和新中大行业类别，返回字符串str'''
     try:
-        hys = ['传统施工', '电力', '水利工程', '传统施工', '环境治理', '工业服务', '公路', '传统施工', ]
+        hys = ['传统施工', '电力', '水利工程', '传统施工', '传统施工', '工业服务', '公路', '传统施工', ]
         yws = ['施工', '设计', '施工', '施工', '运营', '施工', '规划', '施工', ]
-        hy_type = info_dict.get('新中大行业类别', hys[rnd.randint(0, len(hys) - 1)])
+        if rnd.random() < 0.75:
+            hy_types = (rnd.choice(hys),)
+        else:
+            hy_types = tuple(rnd.sample(hys, 2))
         yw_type = info_dict.get('业务类型', yws[rnd.randint(0, len(yws) - 1)])
-        return hy_type, yw_type
+        return hy_types, yw_type
     except Exception as e:
         print(f'industry_get error:{e}')
 
@@ -144,9 +156,10 @@ async def test():
     '''测试函数'''
     try:
         p, pages, browser = await open_sites()
-        wqx_page = await dsj_login(pages[0], taskname='湖南省客户清洗3月21日')  # 改成了无头模式，记得改回来
+        wqx_page = await dsj_login(pages[0], taskname='i8列名客户清洗3.26')  # 改成了无头模式，记得改回来
         new_page, name = await dsj_getinfo(wqx_page)
         await page_fill(new_page)
+        # await close_sites(p, pages, browser)
         await pages[0].wait_for_timeout(timeout=1000)
         await pages[0].close()
         await browser.close()
